@@ -1,10 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Note } from "./Note";
+import axios from "axios";
 
-export const Notes = ({ notesdb }) => {
-  const [notes, setNotes] = useState(notesdb);
+export const Notes = (/*{ notesdb }*/) => {
+  const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("a new note...");
   const [showAll, setShowAll] = useState(true);
+
+  // useEffect(() => {
+  //   console.log("effect");
+  //   axios.get("http://localhost:3001/notes").then((response) => {
+  //     console.log("promise fulfilled");
+  //     setNotes(response.data);
+  //   });
+  // }, []);
+  //console.log("render", notes.length, "notes");
+
+  // const hook = () => {
+  //   console.log("effect");
+  //   axios.get("http://localhost:3001/notes").then((response) => {
+  //     console.log("promise fulfilled");
+  //     setNotes(response.data);
+  //   });
+  // };
+  // useEffect(hook, []);
+
+  useEffect(() => {
+    console.log("effect");
+
+    const eventHandler = (response) => {
+      console.log("promise fulfilled");
+      setNotes(response.data);
+    };
+
+    const promise = axios.get("http://localhost:3001/notes");
+    promise.then(eventHandler);
+  }, []);
 
   const addNote = (event) => {
     event.preventDefault();

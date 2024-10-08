@@ -2,6 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 
+// const promise2 = axios.get("http://localhost:3001/foobar");
+// console.log(promise2);
+
 const notes = [
   {
     id: 1,

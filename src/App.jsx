@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { Course } from "./components/Course";
 import { Note } from "./components/Note";
 import { Notes } from "./components/Notes";
@@ -48,6 +49,11 @@ const course = [
     ],
   },
 ];
+
+// const promise = axios.get("http://localhost:3001/notes").then((res) => {
+//   const notes = res.data;
+//   console.log(notes);
+// });
 
 const App = (props) => {
   return (
