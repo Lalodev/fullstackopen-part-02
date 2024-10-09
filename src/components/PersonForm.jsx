@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import agendaService from "../services/agenda";
 
 export const PersonForm = ({
   persons,
@@ -27,14 +28,39 @@ export const PersonForm = ({
 
     if (!findAPerson(newName)) {
       const newPerson = { name: newName, number: newNumber };
-      setPersons([...persons, newPerson]);
-      setNewName("");
-      setNewNumber("");
-      contactRef.current.focus();
+
+      agendaService.create(newPerson).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+        contactRef.current.focus();
+      });
     } else {
-      alert(`${newName} is already added to phonebook`);
+      const confirm = window.confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one?`
+      );
+
+      if (confirm) {
+        const person = findAPerson(newName);
+        const changedPerson = { ...person, number: newNumber };
+
+        const { id } = person;
+
+        agendaService.update(id, changedPerson).then((returnedPerson) => {
+          setPersons(
+            persons.map((person) =>
+              person.id !== id ? person : returnedPerson
+            )
+          );
+        });
+
+        setNewName("");
+        setNewNumber("");
+        contactRef.current.focus();
+      }
+
       contactRef.current.focus();
-    }
+    } //else
   };
 
   return (

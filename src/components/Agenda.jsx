@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Filter } from "./Filter";
 import { PersonForm } from "./PersonForm";
 import { Persons } from "./Persons";
-import axios from "axios";
+import agendaService from "../services/agenda";
 
 // const dataTest = [
 //   { name: "Arto Hellas", number: "040-123456", id: 1 },
@@ -18,9 +18,8 @@ export const Agenda = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((res) => {
-      // console.log(res.data);
-      setPersons(res.data);
+    agendaService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -38,7 +37,7 @@ export const Agenda = () => {
         setNewNumber={setNewNumber}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} search={search} />
+      <Persons persons={persons} setPersons={setPersons} search={search} />
     </div>
   );
 };
