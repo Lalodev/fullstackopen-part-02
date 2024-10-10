@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter } from "./Filter";
 import { PersonForm } from "./PersonForm";
 import { Persons } from "./Persons";
 import agendaService from "../services/agenda";
+import { Notification } from "./Notification";
 
 // const dataTest = [
 //   { name: "Arto Hellas", number: "040-123456", id: 1 },
@@ -16,6 +17,8 @@ export const Agenda = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [message, setMessage] = useState(null);
+  const [typeMessage, setTypeMessage] = useState("success");
 
   useEffect(() => {
     agendaService.getAll().then((initialPersons) => {
@@ -26,6 +29,7 @@ export const Agenda = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} type={typeMessage} />
       <Filter search={search} setSearch={setSearch} />
       <h2>Add a new</h2>
       <PersonForm
@@ -35,6 +39,8 @@ export const Agenda = () => {
         setNewName={setNewName}
         newNumber={newNumber}
         setNewNumber={setNewNumber}
+        setMessage={setMessage}
+        setTypeMessage={setTypeMessage}
       />
       <h2>Numbers</h2>
       <Persons persons={persons} setPersons={setPersons} search={search} />

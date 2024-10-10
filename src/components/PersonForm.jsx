@@ -8,6 +8,8 @@ export const PersonForm = ({
   setNewName,
   newNumber,
   setNewNumber,
+  setMessage,
+  setTypeMessage,
 }) => {
   const contactRef = useRef();
 
@@ -33,7 +35,12 @@ export const PersonForm = ({
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
-        contactRef.current.focus();
+
+        setTypeMessage("success");
+        setMessage(`${newName} was added successfully`);
+        setTimeout(() => {
+          setMessage(null);
+        }, 5000);
       });
     } else {
       const confirm = window.confirm(
@@ -46,17 +53,32 @@ export const PersonForm = ({
 
         const { id } = person;
 
-        agendaService.update(id, changedPerson).then((returnedPerson) => {
-          setPersons(
-            persons.map((person) =>
-              person.id !== id ? person : returnedPerson
-            )
-          );
-        });
+        agendaService
+          .update(id, changedPerson)
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id !== id ? person : returnedPerson
+              )
+            );
+            setTypeMessage("success");
+            setMessage(`${newName}'s phonenumber was updated successfully`);
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            setTypeMessage("error");
+            setMessage(
+              `Information of ${newName} has already been removed from server`
+            );
+            setTimeout(() => {
+              setMessage(null);
+            }, 5000);
+          });
 
         setNewName("");
         setNewNumber("");
-        contactRef.current.focus();
       }
 
       contactRef.current.focus();

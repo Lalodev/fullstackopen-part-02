@@ -59,7 +59,8 @@ const App = (/*props*/) => {
   return (
     <div>
       <Agenda />
-      {/* <Notes notesdb={props.notes} /> */}
+      {/* <Notes /> */}
+      {/* notesdb={props.notes} */}
       {/* <Course course={course} /> */}
     </div>
   );

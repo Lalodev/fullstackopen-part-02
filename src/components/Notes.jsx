@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Note } from "./Note";
-import axios from "axios";
 import noteService from "../services/notes";
+
+import { Notification } from "./Notification";
+import { Footer } from "./Footer";
 
 export const Notes = (/*{ notesdb }*/) => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("a new note...");
   const [showAll, setShowAll] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     //console.log("effect");
@@ -78,7 +81,13 @@ export const Notes = (/*{ notesdb }*/) => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
       .catch((error) => {
-        alert(`the note '${note.content}' was already deleted from server`);
+        //alert(`the note '${note.content}' was already deleted from server`);
+        setErrorMessage(
+          `Note '${note.content}' was already removed from server`
+        );
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
         setNotes(notes.filter((note) => note.id !== id));
       });
   };
@@ -86,6 +95,7 @@ export const Notes = (/*{ notesdb }*/) => {
   return (
     <div>
       <h1>Notes</h1>
+      <Notification message={errorMessage} />
       <div>
         <button onClick={() => setShowAll(!showAll)}>
           show {showAll ? "important" : "all"}
@@ -107,6 +117,8 @@ export const Notes = (/*{ notesdb }*/) => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">save</button>
       </form>
+
+      <Footer />
     </div>
   );
 };
