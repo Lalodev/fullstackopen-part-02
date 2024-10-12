@@ -34,3 +34,17 @@ h2 {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+li {
+  list-style-type: none;
+}
+
+.list-disc {
+  list-style-type: disc;
+}
+
+.image {
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
+}

@@ -6,7 +6,7 @@ import { Notification } from "./Notification";
 import { Footer } from "./Footer";
 
 export const Notes = (/*{ notesdb }*/) => {
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(null);
   const [newNote, setNewNote] = useState("a new note...");
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -26,6 +26,11 @@ export const Notes = (/*{ notesdb }*/) => {
       setNotes(initialNotes);
     });
   }, []);
+
+  // no renderizar nada si notes aún es null
+  if (!notes) {
+    return null;
+  }
 
   const addNote = (event) => {
     event.preventDefault();

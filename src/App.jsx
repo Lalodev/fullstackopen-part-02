@@ -4,6 +4,9 @@ import { Course } from "./components/Course";
 import { Note } from "./components/Note";
 import { Notes } from "./components/Notes";
 import { Agenda } from "./components/Agenda";
+import { ExchangeRate } from "./components/ExchangeRate";
+import { Countries } from "./components/Countries";
+import axios from "axios";
 
 // const course = [
 //   {
@@ -58,7 +61,9 @@ import { Agenda } from "./components/Agenda";
 const App = (/*props*/) => {
   return (
     <div>
-      <Agenda />
+      <Countries />
+      {/* <ExchangeRate /> */}
+      {/* <Agenda /> */}
       {/* <Notes /> */}
       {/* notesdb={props.notes} */}
       {/* <Course course={course} /> */}
